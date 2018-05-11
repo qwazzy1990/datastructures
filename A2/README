@@ -1,0 +1,35 @@
+*************************
+Patrick Di Salvo
+0629576
+disalvop@mail.uoguelph.ca
+*************************
+********************************************************************************************
+To create an executable for main.c type make prog1
+To run the executable go to bin folder and type ./prog1 with a text file as second argument
+Executable for main.c expects a command line argument
+********************************************************************************************
+
+********************************************************************************************
+To create an executable for testMain.c type make prog2
+To run the executable go to bun folder and type ./prog2 - second command line argument optional
+In order to test all functions in testMain.c a second command line argument is required
+*********************************************************************************************
+
+***************************************************************
+Limitations: 
+   Requires 2 arguments on command line for full functionality
+   Multiple functions tested simultaneously in testMain.c
+***************************************************************
+
+*******************************************************************************************
+Program simulates a hospital line up. Patients enter hospital and are ushered through based 
+on priority number. 1 second of paper work is required after treatment
+*******************************************************************************************
+
+*************************************************
+To run the program press make in command terminal
+go to ./bin/ 
+press ./prog1 <textfile>
+go to ./bin/
+press ./prog2 <textfile optional>
+**************************************************

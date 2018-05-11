@@ -1,0 +1,48 @@
+# These lines are makefile comments, this makefile is more complicated.
+
+
+# Any flags used by the compiler
+CFLAGS = -std=c99 -Wall -pedantic -g -Iinclude -c
+
+
+# C Compiler (CC) = gcc
+CC = gcc
+
+
+# List of object files
+fileNames = objLib/fileOne.o objLib/fileTwo.o objLib/fileThree.o objLib/main.o
+
+
+
+
+# Builds the entire program
+
+build: $(fileNames)
+	$(CC) $(fileNames) -o bin/runMe
+
+
+
+
+# Builds each of the individual c files into .o files
+
+objLib/fileOne.o:
+	gcc $(CFLAGS) src/fileOne.c -o objLib/fileOne.o
+
+objLib/fileTwo.o:
+	gcc $(CFLAGS) src/fileTwo.c -o objLib/fileTwo.o
+
+objLib/fileThree.o:
+	gcc $(CFLAGS) src/fileThree.c -o objLib/fileThree.o
+
+objLib/main.o:
+	gcc $(CFLAGS) src/main.c -o objLib/main.o
+
+
+
+
+# cleans the objLib and bin
+
+clean:
+	rm objLib/*.o
+	rm bin/runMe
+
