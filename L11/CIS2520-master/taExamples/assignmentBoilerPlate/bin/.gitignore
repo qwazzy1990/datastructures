@@ -1,3 +1,0 @@
-# This is a comment, * ignores everything in this directory, except .gitignore
-*
-!.gitignore
