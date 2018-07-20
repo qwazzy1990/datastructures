@@ -7,7 +7,7 @@
 #include "utilities.h"
 
 bool debug1 = false;
-bool debug2 = true;
+bool debug2 = false;
 bool debug3 = false;
 
 int main(int argc, char* argv[])
