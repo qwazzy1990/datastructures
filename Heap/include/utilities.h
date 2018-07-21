@@ -83,7 +83,7 @@ typedef struct i Iterator;
 		 *
 		 * **/
 typedef void (*SwapFunc)(AnyData a, AnyData b);
-typedef int (*CompareFunc)(AnyData a, AnyData b);
+typedef int (*CompareFunc)(const void* a, const void* b);
 typedef char *(*PrintFunc)(AnyData data);
 typedef void (*DeleteFunc)(AnyData data);
 typedef void *(*CloneFunc)(AnyData data);
@@ -183,5 +183,7 @@ int dummy_compare(const void *a, const void *b);
 char *dummy_print(AnyData p);
 
 void dummy_delete(AnyData d);
+
+
 
 #endif

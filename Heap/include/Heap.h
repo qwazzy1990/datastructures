@@ -18,10 +18,15 @@ typedef enum herr HeapError;
 /****END ENUM DEFINITIONS****/
 
 
-/*****META DATA AND PRE-PROCESSORS***/
-unsigned long _____heapSizes[10] = {10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000};
 
 #define destroy_heap(heap) destroy_heap_real(&heap)
+#define destroy(myarg) destroy(&myarg)
+
+/*#define DEBUG1 false
+#define DEBUG2 true
+#define DEBUG3 false
+#define DEBUG4 false*/
+
 
 /***FIX ME***/
 #define PARENT_INDEX(X) 
@@ -33,7 +38,7 @@ struct hn{
     struct hn* leftChild;
     struct hn* rightChild;
 };
-typedef struct hn heapode;
+typedef struct hn heapnode;
 typedef heapnode* HeapNode;
 
 struct h{
@@ -50,10 +55,40 @@ struct h{
     DeleteFunc deleteData;
     CompareFunc compareData;
 
-    
+
+    /**FUNCTION POINTERS TO API GIVING OBJECT ORIENTED STYLE**/
+    unsigned long (*get_height)(struct h*);
+    unsigned long (*get_size)(struct h*);
+    unsigned long(*get_capacity)(struct h*);
+    AnyData (*get_array)(struct h*);
+    AnyData (*get_min)(struct h*);
+    AnyData (*get_data)(struct h*, AnyData);
+    AnyData (*get_max)(struct h*);
+    AnyData (*get_parent)(struct h*, AnyData);
+    AnyData (*get_left_child)(struct h*, AnyData);
+    AnyData (*get_right_child)(struct h*, AnyData);
+    String (*get_type)(struct h*);
+
+    bool (*contains)(struct h*, AnyData);
+    bool (*is_empty)(struct h*);
+    bool (*is_full)(struct h*);
+
+    String (*print)(struct h*);
+    String (*to_string)(struct h*);
+
+    HeapError (*add)(struct h*, AnyData);
+    HeapError (*resize)(struct h*, int);
+    HeapError (*set_height)(struct h*);
+
+    HeapError (*destroy_data)(struct h*, AnyData);
+    HeapError (*destroy_root)(struct h*);
+    HeapError (*destroy_parent)(struct h*, AnyData);
+    HeapError (*destroy_left_child)(struct h*, AnyData);
+    HeapError (*destroy_right_child)(struct h*, AnyData);
+    HeapError (*destroy)(struct h**);
 };
 
-typedef h heap;
+typedef struct h heap;
 typedef heap* Heap;
 
 /***END STRUCT DEFINITIONS***/
@@ -92,7 +127,7 @@ AnyData get_parent_data(Heap heap, AnyData d);
 
 AnyData get_left_child_data(Heap heap, AnyData d);
 
-AnyData get_right_child_data(Heap )
+AnyData get_right_child_data(Heap heap, AnyData d);
 
 String get_heap_type(Heap heap);
 
@@ -117,7 +152,7 @@ HeapError destroy_data_heap(Heap heap, AnyData d);
 
 HeapError destroy_root_data_heap(Heap heap);
 
-HeapError destroy_parent_object(Heap heap, AnyData d);
+HeapError destroy_parent_data(Heap heap, AnyData d);
 
 HeapError destroy_left_child_data(Heap heap, AnyData d);
 
@@ -135,11 +170,17 @@ String heap_to_string(Heap heap);
 /***END MUTATORS***/
 
 
+/****PRINTERS****/
+
+String print_heap(Heap heap);
+
+/****END PRINTERS***/
+
 /***VALIDATORS****/
 
 bool is_empty_heap(Heap heap);
 
-bool is_full(Heap heap);
+bool is_full_heap(Heap heap);
 
 bool contains_data_heap(Heap heap, AnyData d);
 

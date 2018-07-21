@@ -26,7 +26,7 @@ static int partition(void *a, int l, int r, CompareFunc compare)
     }
     void *temp = ((void**)a)[i + 1];
     ((void**)a)[i + 1] = ((void**)a)[r];
-    ((void**)a)[r] = ((void**)a)[i + 1];
+    ((void**)a)[r] = temp;
     return (i + 1);
 }
 
@@ -132,8 +132,8 @@ int dummy_compare(const void* a, const void* b)
     if(b == NULL)return -2;
     int* first = (int*)a;
     int* second = (int*)b;
-    if(*first == *second)return 0;
-    else if(*first < *second)return -1;
+    if((*first) == (*second))return 0;
+    else if((*first) < (*second))return -1;
     else return 1;
 }
 
@@ -150,3 +150,5 @@ Cloner new_cloner(CloneFunc clonerFunction)
     cloner.cloneData = clonerFunction;
     return cloner;
 }
+
+
