@@ -502,7 +502,9 @@ String print_heap(Heap heap)
     if(heap->heapArray == NULL)return NULL;
     String printer = heap_to_string(heap);
     if(printer == NULL)return NULL;
-    printf("%s\n", printer);
+    #ifdef DEBUGP
+        printf("%s\n", printer);
+    #endif
     return printer;
 }
 
@@ -625,31 +627,25 @@ HeapError destroy_left_child_data(Heap heap, AnyData d)
     if(heap->size == 0)return FAIL_DELETE_HEAP;
     if(heap->size == 1)return FAIL_DELETE_HEAP;
     if(heap->contains(heap, d)==false)return DNF_HEAP;
-    AnyData* array = NULL;
+
+    new_object(AnyData*, array, heap->size + 1);
     int oldSize = heap->size;
-    array = calloc(heap->size, sizeof(*array));
     CompareFunc comparator = heap->compareData;
     int count = 0;
-    int index = -1;
-    forall(oldSize){
-        if(comparator(heap->heapArray[x], d)==0){
-            index = ((2*x)+1); 
-        }
-    }
-    if(index >= oldSize){
+    void* childData = heap->get_left_child(heap, d);
+    if(childData == NULL){
         clear(array);
         return FAIL_DELETE_HEAP;
     }
     forall(oldSize){
         void* temp = heap->heapArray[x];
-        if(comparator(heap->heapArray[index], temp) != 0){
+        if(comparator(childData, temp) != 0){
             array[count] = heap->heapArray[x];
             count++;
         }
     }
-    void** temp = heap->heapArray;
-    clear(temp[index]);
-    clear(temp);
+    clear(childData);
+    clear(heap->heapArray);
     heap->heapArray = array;
     heap->root->data = heap->heapArray[0];
     (heap->size)--;
@@ -667,31 +663,25 @@ HeapError destroy_right_child_data(Heap heap, AnyData d)
     if(heap->size == 0)return FAIL_DELETE_HEAP;
     if(heap->size == 1)return FAIL_DELETE_HEAP;
     if(heap->contains(heap, d)==false)return DNF_HEAP;
-    AnyData* array = NULL;
+
+    new_object(AnyData*, array, heap->size + 1);
     int oldSize = heap->size;
-    array = calloc(heap->size, sizeof(*array));
     CompareFunc comparator = heap->compareData;
     int count = 0;
-    int index = -1;
-    forall(oldSize){
-        if(comparator(heap->heapArray[x], d)==0){
-            index = ((2*x)+1); 
-        }
-    }
-    if(index >= oldSize){
+    void* childData = heap->get_right_child(heap, d);
+    if(childData == NULL){
         clear(array);
         return FAIL_DELETE_HEAP;
     }
     forall(oldSize){
         void* temp = heap->heapArray[x];
-        if(comparator(heap->heapArray[index], temp) != 0){
+        if(comparator(childData, temp) != 0){
             array[count] = heap->heapArray[x];
             count++;
         }
     }
-    void** temp = heap->heapArray;
-    clear(temp[index]);
-    clear(temp);
+    clear(childData);
+    clear(heap->heapArray);
     heap->heapArray = array;
     heap->root->data = heap->heapArray[0];
     (heap->size)--;
@@ -712,34 +702,22 @@ HeapError destroy_parent_data(Heap heap, AnyData d)
     new_object(AnyData*, array, heap->size + 1);
     CompareFunc comparator = heap->compareData;
     int count = 0;
-    int index = -1;
-    int checkRoot = 0;
-    forall(oldSize){
-        if(comparator(heap->heapArray[x], d)==0){
-            checkRoot = x;
-            index = ((x-1)-2); 
-        }
-    }
-    if(checkRoot == 0){
+    void* parentData = heap->get_parent(heap, d);
+    if(parentData == NULL){
         clear(array);
         return FAIL_DELETE_HEAP;
     }
     forall(oldSize){
         void* temp = heap->heapArray[x];
-        if(comparator(temp, heap->heapArray[index]) != 0){
+        if(comparator(temp, parentData) != 0){
             array[count] = heap->heapArray[x];
             count++;
         }
     }
    
-    void** temp = heap->heapArray;
-    clear(temp[index]);
-    clear(temp);    
+    clear(parentData);
+    clear(heap->heapArray);    
     heap->heapArray = array;
-    forall(heap->size - 1){
-        int* temp = heap->heapArray[x];
-        printf("NN %d\n", *temp);
-    }
     heap->root->data = heap->heapArray[0];
     (heap->size)--;
 

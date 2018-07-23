@@ -18,7 +18,6 @@ typedef enum herr HeapError;
 /****END ENUM DEFINITIONS****/
 
 
-
 #define destroy_heap(heap) destroy_heap_real(&heap)
 #define destroy(myarg) destroy(&myarg)
 

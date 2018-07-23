@@ -39,13 +39,7 @@ int main(int argc, char *argv[])
         insert_data_heap(heap, g);
         insert_data_heap(heap, h);
 
-        forall(heap->size)
-        {
-            int *temp = heap->heapArray[x];
-            printf("%d\n", (*temp));
-        }
-
-        int *temp = get_parent_data(heap, c);
+        int *temp = get_parent_data(heap, h);
         if (temp == NULL)
         {
             printf("Success\n");
@@ -56,7 +50,7 @@ int main(int argc, char *argv[])
         }
 
         set_heap_height(heap);
-        printf("height is %d\n", heap->height);
+        printf("height is %d\n", (int)heap->height);
         destroy_root_data_heap(heap);
 
         destroy_heap(heap);
@@ -92,9 +86,10 @@ int main(int argc, char *argv[])
         heap->add(heap, g);
         heap->add(heap, b);
         
+       
+        heap->destroy_right_child(heap, a);
         PRINTER = heap->print(heap);
         clear(PRINTER);
-        heap->destroy_root(heap);
         heap->destroy(heap);
     #endif
     return 0;

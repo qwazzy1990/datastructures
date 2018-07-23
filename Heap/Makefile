@@ -29,10 +29,22 @@ test1: maketest1 runtest1
 		
 maketest1:
 	mkdir bin
-	$(CC) $(CFLAGS) -Iinclude -D DEBUG1=false -lm src/DynamicString.c src/utilities.c src/Heap.c test/testmain.c -o bin/test1
+	$(CC) $(CFLAGS) -Iinclude -lm src/DynamicString.c src/utilities.c src/Heap.c test/testmain.c -o bin/test1 -DDEBUG1 -DDEBUGP
 
 runtest1:
-	./bin/test1
+	valgrind -v --leak-check=full ./bin/test1
+
+test2: maketest2 runtest2
+
+maketest2:
+	mkdir bin
+	$(CC) $(CFLAGS) -Iinclude -lm src/DynamicString.c src/utilities.c src/Heap.c test/testmain.c -o bin/test2 -DDEBUG2 -DDEBUGP
+
+
+runtest2:
+	valgrind -v --leak-check=full ./bin/test2
+
+
 
 clean:
 	rm -r bin
