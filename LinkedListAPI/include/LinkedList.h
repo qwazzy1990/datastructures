@@ -31,23 +31,6 @@ typedef struct n listnode;
 typedef listnode *ListNode;
 typedef ListNode *ListNodes;
 
-/***Struct for type list****/
-struct l
-{
-    struct n *head;
-    struct n *tail;
-
-    PrintFunc printData;
-    DeleteFunc deleteData;
-    CompareFunc compareData;
-
-    //add more function pointers to create object oriented style.
-    int length;
-};
-typedef struct l list;
-
-/***Typedef for list* = List****/
-typedef list *LinkedList;
 
 struct itr
 {
@@ -66,6 +49,53 @@ enum ec
     DUPLICATE_VALUE_LIST,
 };
 typedef enum ec ListErrorCode;
+/***Struct for type list****/
+struct l
+{
+    struct n *head;
+    struct n *tail;
+
+    PrintFunc printData;
+    DeleteFunc deleteData;
+    CompareFunc compareData;
+
+    //add more function pointers to create object oriented style.
+
+    /****ACESSOR FP***/
+    AnyData (*get_from_front)(struct l*);
+    AnyData (*get_from_back)(struct l*);
+    AnyData (*find)(struct l*, AnyData);
+    int (*get_len)(struct l*);
+
+    /***SETTER FP***/
+
+    ListErrorCode (*insert_front)(struct l*, AnyData);
+    ListErrorCode (*insert_back)(struct l*, AnyData);
+    ListErrorCode (*insert_sorted)(struct l*, AnyData);
+
+
+    /***VALIDATOR FP***/
+    bool (*contains)(struct l*, AnyData);
+
+    /***DESTROYER FP****/
+    ListErrorCode (*remove)(struct l*, AnyData);
+    ListErrorCode (*remove_from_front)(struct l*);
+    ListErrorCode (*remove_from_back)(struct l*);
+
+    /***ITERATOR FP***/
+    LinkedListIterator (*new_iterator)(struct l*);
+    AnyData (*next)(LinkedListIterator);
+    String (*to_string)(struct l*);
+    AnyData (*to_array)(struct l*);
+    
+    int length;
+};
+typedef struct l list;
+
+/***Typedef for list* = List****/
+typedef list *LinkedList;
+
+
 
 /***DEBUG MACROS***/
 
@@ -246,6 +276,10 @@ AnyData next_element(LinkedListIterator itr);
  * 
  * */
 ListErrorCode destroy_object_list(LinkedList l, AnyData d);
+
+ListErrorCode remove_from_back_list(LinkedList l);
+
+ListErrorCode remove_from_front_list(LinkedList l);
 
 /** Clears the contents linked list, freeing all memory asspociated with these contents.
 * uses the supplied function pointer to release allocated memory for the data

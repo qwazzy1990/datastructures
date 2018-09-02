@@ -50,33 +50,33 @@ struct al
      * ***/
 
     /**Function Pointers to Getters***/
-    int (*get_arraylist_size)(struct al *a);
-    int (*get_list_length)(struct al *a, String type);
+    int (*get_size)(struct al *a);
+    int (*get_length)(struct al *a, String type);
     LinkedList (*get_list)(struct al *a, String type);
 
-    AnyData (*get_from_back_arraylist)(struct al *a, String type);
-    AnyData (*get_from_front_arraylist)(struct al *a, String type);
+    AnyData (*get_from_back)(struct al *a, String type);
+    AnyData (*get_from_front)(struct al *a, String type);
 
     /***FUNCTION POINTERS TO CHECKERS AND VALIDATORS****/
-    bool (*contains_data_arraylist)(struct al *a, AnyData d);
-    bool (*empty_arraylist)(struct al *a);
+    bool (*contains_data)(struct al *a, AnyData d);
+    bool (*empty)(struct al *a);
 
     /***Function Pointers to Setters****/
 
-    ArrayListError (*add_list)(struct al *a, String type, PrintFunc p, DeleteFunc d, CompareFunc c);
-    ArrayListError (*insert_front_arraylist)(struct al *a, String type, AnyData d);
-    ArrayListError (*insert_back_arraylist)(struct al *a, String type, AnyData d);
-    ArrayListError (*insert_sorted_arraylist)(struct al *a, String type, AnyData d);
+    ArrayListError (*add)(struct al *a, String type, PrintFunc p, DeleteFunc d, CompareFunc c);
+    ArrayListError (*insert_front)(struct al *a, String type, AnyData d);
+    ArrayListError (*insert_back)(struct al *a, String type, AnyData d);
+    ArrayListError (*insert_sorted)(struct al *a, String type, AnyData d);
 
     /***Function Pointers to Destroyers***/
 
-    ArrayListError (*destroy_object_arraylist)(struct al *a, AnyData d);
-    ArrayListError (*remove_list)(struct al* a, String type);
-    ArrayListError (*destroy_arraylist)(struct al **a);
+    ArrayListError (*destroy_object)(struct al *a, AnyData d);
+    ArrayListError (*remove)(struct al* a, String type);
+    ArrayListError (*destroy)(struct al **a);
 
     /****Function Pointer to Sorters****/
 
-    void (*sort_arraylist)(struct al *a);
+    void (*sort)(struct al *a);
 };
 typedef struct al Arraylist;
 

@@ -30,6 +30,25 @@ LinkedList new_linkedlist(PrintFunc p, DeleteFunc d, CompareFunc c)
     newList->printData = p;
     newList->deleteData = d;
     newList->compareData = c;
+
+    newList->get_from_front = get_from_front;
+    newList->get_from_back = get_from_back;
+    newList->find = find_data_list;
+    newList->get_len = get_length;
+
+    newList->insert_back = insert_back;
+    newList->insert_front = insert_front;
+    newList->insert_sorted = insert_sorted;
+
+    newList->new_iterator = new_iterator;
+
+    newList->remove = destroy_object_list;
+    newList->remove_from_back = remove_from_back_list;
+    newList->remove_from_front = remove_from_front_list;
+
+    newList->to_string = list_to_string;
+    newList->to_array = list_to_array;
+
     newList->length = 0;
     newList->head = NULL;
     newList->tail = NULL;
@@ -426,7 +445,35 @@ ListErrorCode destroy_object_list(LinkedList l, AnyData d)
 
 }//end func
 
+ListErrorCode remove_from_back_list(LinkedList l)
+{
+    if(l == NULL)return DNE_LIST;
+    if(l->length == 0)return DNF_LIST;
+    ListNode temp = l->tail;
+    l->tail = l->tail->previous;
+    DeleteFunc destroyer = l->deleteData;
+    if(destroyer == NULL)return DNE_LIST;
+    destroyer(temp->data);
+    clear(temp);
+    l->tail->next = NULL;
+    l->length--;
+    return OK_LIST;
+}
 
+ListErrorCode remove_from_front_list(LinkedList l)
+{
+    if(l == NULL)return DNE_LIST;
+    if(l->length == 0)return DNF_LIST;
+    ListNode temp = l->head;
+    l->head = l->head->next;
+    DeleteFunc destroyer = l->deleteData;
+    if(destroyer == NULL)return DNE_LIST;
+    destroyer(temp->data);
+    clear(temp);
+    l->head->previous = NULL;
+    l->length--;
+    return OK_LIST; 
+}
 
 ListErrorCode destroy_list_real(LinkedList* l){
 

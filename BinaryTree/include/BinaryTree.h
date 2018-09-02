@@ -9,28 +9,6 @@
 #include "utilities.h"
 #include "DynamicString.h"
 
-
-struct n{
-    AnyData data;
-    struct n* leftChild;
-    struct n* rightChild;
-};
-typedef struct n treenode;
-typedef treenode* TreeNode;
-typedef TreeNode* TreeNodes;
-
-struct t{
-    TreeNode root;
-    int height;
-    int size;
-    PrintFunc printData;
-    DeleteFunc deleteData;
-    CompareFunc compareData;
-    CloneFunc cloneData;
-};
-typedef struct t binarytree;
-typedef binarytree* BinaryTree;
-
 struct bitr{
     TreeNode current;
 };
@@ -53,6 +31,53 @@ enum terr{
     DUPLICATE_VALUE_TREE
 };
 typedef enum terr TreeErrorCode;
+
+struct n{
+    AnyData data;
+    struct n* leftChild;
+    struct n* rightChild;
+};
+typedef struct n treenode;
+typedef treenode* TreeNode;
+typedef TreeNode* TreeNodes;
+
+struct t{
+    TreeNode root;
+    int height;
+    int size;
+    PrintFunc printData;
+    DeleteFunc deleteData;
+    CompareFunc compareData;
+    CloneFunc cloneData;
+
+    /***FP TO ACCESSORS***/
+    AnyData (*get_root)(struct t*);
+    AnyData (*find)(struct t*, AnyData);
+    int (*get_height)(struct t*);
+    int (*get_size)(struct t*);
+
+    /***FP TO DESTROYERS**/
+    TreeErrorCode (*remove)(struct t*, AnyData);
+    TreeErrorCode (*remove_root)(struct t*);
+    TreeErrorCode (*remove_smallest)(struct t*);
+    TreeErrorCode (*remove_largest)(struct t*);
+
+    /***FP TO SETTERS**/
+    TreeErrorCode (*add)(struct t*, AnyData);
+    TreeErrorCode (*set_height)(struct t*);
+
+    /***FP TO ITERATORS FIX ME!!***/
+
+    /***MUTATORS***/
+    String (*to_string)(struct t*, TraversalOrder);
+    AnyData (*to_array)(struct t*, TraversalOrder);
+
+
+
+};
+typedef struct t binarytree;
+typedef binarytree* BinaryTree;
+
 
 /***PRE-PROCESSOR DIRECTIVES***/
 
@@ -141,6 +166,12 @@ int get_size(BinaryTree tree);
 
 TreeErrorCode destroy_data_tree(BinaryTree tree, AnyData d);
 
+TreeErrorCode remove_root_tree(BinaryTree tree);
+
+TreeErrorCode remove_largest_tree(BinaryTree tree);
+
+TreeErrorCode remove_smallest_tree(BinaryTree tree);
+
 TreeErrorCode destroy_tree_real(BinaryTree* tree);
 
 /***END DESTROYERS***/
@@ -181,7 +212,7 @@ bool is_root(BinaryTree tree, TreeNode node);
 bool is_leaf(TreeNode node);
 
 bool is_root_data(AnyData d);
-bool is_leaf_data(AnyData);
+bool is_leaf_data(AnyData d);
 
 bool has_two_children(TreeNode node);
 bool has_one_child(TreeNode node);

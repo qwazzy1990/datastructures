@@ -62,33 +62,33 @@ ArrayList new_arraylist(PrintFunc p, DeleteFunc d, CompareFunc c)
     a->deleteArrayList = d;
     a->compareArrayList = c;
     /***FUNCTION POINTERS TO GETTERS****/
-    a->get_arraylist_size = get_arraylist_size;
-    a->get_list_length = get_list_length;
+    a->get_size = get_arraylist_size;
+    a->get_length = get_list_length;
     a->get_list = get_list;
-    a->get_from_back_arraylist = get_from_back_arraylist;
-    a->get_from_front_arraylist = get_from_front_arraylist;
+    a->get_from_back = get_from_back_arraylist;
+    a->get_from_front = get_from_front_arraylist;
 
     /**Function Pointers to Checkers and Validators****/
 
     //a->contains_data_arraylist = contains_data_arraylist;
-    a->empty_arraylist = empty_arraylist;
+    a->empty = empty_arraylist;
 
     /****Function Pointers to Setters****/
 
-    a->add_list = add_list;
-    a->insert_back_arraylist = insert_back_arraylist;
-    a->insert_front_arraylist = insert_front_arraylist;
-    a->insert_sorted_arraylist = insert_sorted_arraylist;
+    a->add = add_list;
+    a->insert_back = insert_back_arraylist;
+    a->insert_front = insert_front_arraylist;
+    a->insert_sorted = insert_sorted_arraylist;
 
     /***Function Pointers to Destroyers***/
 
-    a->destroy_arraylist = destroy_arraylist_real;
-    a->remove_list = remove_list;
-    a->destroy_object_arraylist = destroy_object_arraylist;
+    a->destroy = destroy_arraylist_real;
+    a->remove = remove_list;
+    a->destroy_object = destroy_object_arraylist;
 
     /***Function Pointer to Sorter***/
 
-    a->sort_arraylist = sort_arraylist;
+    a->sort = sort_arraylist;
 
     a->size = 0;
     a->lists = NULL;
@@ -485,5 +485,5 @@ void sort_arraylist(ArrayList a)
 {
     if (a == NULL)
         return;
-    quicksort_arraylist(a, 0, (a->get_arraylist_size(a) - 1));
+    quicksort_arraylist(a, 0, (a->get_size(a) - 1));
 }
