@@ -9,6 +9,17 @@
 #include "utilities.h"
 #include "DynamicString.h"
 
+
+struct n{
+    AnyData data;
+    struct n* leftChild;
+    struct n* rightChild;
+};
+typedef struct n treenode;
+typedef treenode* TreeNode;
+typedef TreeNode* TreeNodes;
+
+
 struct bitr{
     TreeNode current;
 };
@@ -31,15 +42,6 @@ enum terr{
     DUPLICATE_VALUE_TREE
 };
 typedef enum terr TreeErrorCode;
-
-struct n{
-    AnyData data;
-    struct n* leftChild;
-    struct n* rightChild;
-};
-typedef struct n treenode;
-typedef treenode* TreeNode;
-typedef TreeNode* TreeNodes;
 
 struct t{
     TreeNode root;
