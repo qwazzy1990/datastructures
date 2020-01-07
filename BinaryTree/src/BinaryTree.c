@@ -55,7 +55,7 @@ static bool _____contains_tree_data(TreeNode root, AnyData d, CompareFunc c)
     }
 }
 
-static void _____add_tree(BinaryTree tree, TreeNode root, TreeNode node)
+static void _____add_tree(BinaryTree tree, TreeNode root, TreeNode node) //struct TreeNode* root
 {
     if(root == NULL){
         root = node;
@@ -319,7 +319,7 @@ TreeErrorCode add_tree(BinaryTree tree, AnyData d)
     if(contains_tree_data(tree, d))return DUPLICATE_VALUE_TREE;
     TreeNode newNode = new_tree_node(d);
     TreeNode root = tree->root;
-    _____add_tree(tree, root, newNode);
+    _____add_tree(tree, tree->root, newNode);
     tree->size++;
     return OK_TREE;
 }
