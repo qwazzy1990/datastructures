@@ -33,6 +33,7 @@ typedef struct listHead{
     Node* head;
     Node* tail;
     int length;
+    
     void (*deleteData)(void* toBeDeleted);
     int (*compare)(const void* first, const void* second);
     char* (*printData)(void* toBePrinted);
@@ -55,7 +56,7 @@ typedef struct iter{
 *@param deleteFunction function pointer to delete a single piece of data from the list
 *@param compareFunction function pointer to compare two nodes of the list in order to test for equality or order
 **/
-List initializeList(char* (*printFunction)(void* toBePrinted),void (*deleteFunction)(void* toBeDeleted),int (*compareFunction)(const void* first,const void* second));
+List* initializeList(char* (*printFunction)(void* toBePrinted),void (*deleteFunction)(void* toBeDeleted),int (*compareFunction)(const void* first,const void* second));
 
 
 
@@ -99,6 +100,8 @@ void insertBack(List* list, void* toBeAdded);
 **/
 void clearList(List* list);
 
+void freeList(void* list);
+
 
 /** Uses the comparison function pointer to place the element in the
 * appropriate position in the list.
@@ -133,7 +136,7 @@ void* deleteDataFromList(List* list, void* toBeDeleted);
  *@param the list struct
  *@return pointer to the data located at the head of the list
  **/
-void* getFromFront(List list);
+void* getFromFront(List* list);
 
 
 
@@ -142,7 +145,7 @@ void* getFromFront(List list);
  *@param the list struct
  *@return pointer to the data located at the tail of the list
  **/
-void* getFromBack(List list);
+void* getFromBack(List* list);
 
 
 
@@ -153,7 +156,7 @@ returned string must be freed by the calling function.
  *@param list Pointer to linked list dummy head.
  *@return on success: char * to string representation of list (must be freed after use).  on failure: NULL
  **/
-char* toString(List list);
+char* toString(List* list);
 
 
 /** Function for creating an iterator for the linked list.
@@ -164,7 +167,7 @@ char* toString(List list);
  *@return The newly created iterator object.
  *@param list - a pointer to the list to iterate over.
 **/
-ListIterator createIterator(List list);
+ListIterator createIterator(List* list);
 
 
 /** Function that returns the next element of the list through the iterator.
@@ -183,7 +186,7 @@ void* nextElement(ListIterator* iter);
  *@param list - the list struct.
  *@return on success: number of eleemnts in the list (0 or more).  on failure: -1 (e.g. list not initlized correctly)
  **/
-int getLength(List list);
+int getLength(List* list);
 
 /** Function that searches for an element in the list using a comparator function.
  * If an element is found, a pointer to the data of that element is returned
@@ -197,6 +200,6 @@ int getLength(List list);
  *Note: while the arguments of compare() and searchRecord are all void, it is assumed that records they point to are
  *      all of the same type - just like arguments to the compare() function in the List struct
  **/
-void* findElement(List list, bool (*customCompare)(const void* first,const void* second), const void* searchRecord);
+void* findElement(List* list, bool (*customCompare)(const void* first,const void* second), const void* searchRecord);
 
 #endif
